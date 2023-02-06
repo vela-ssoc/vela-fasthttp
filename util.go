@@ -6,7 +6,6 @@ import (
 	"github.com/valyala/fasthttp"
 	"github.com/vela-ssoc/vela-kit/kind"
 	"github.com/vela-ssoc/vela-kit/lua"
-	region "github.com/vela-ssoc/vela-region"
 	"os"
 	"path/filepath"
 	"runtime/debug"
@@ -81,28 +80,6 @@ func checkRequestCtx(L *lua.LState) *RequestCtx {
 		return nil
 	}
 	return ctx
-}
-
-func checkRegionSdk(L *lua.LState, val lua.LValue) *region.Region {
-
-	switch val.Type() {
-	case lua.LTNil:
-		return nil
-
-	case lua.LTVelaData:
-		r, ok := val.(*lua.VelaData).Data.(*region.Region)
-		if !ok {
-			L.RaiseError("invalid region sdk")
-			return nil
-		}
-		return r
-
-	default:
-		//todo
-	}
-
-	L.RaiseError("invalid region object , got %s", val.Type().String())
-	return nil
 }
 
 func checkOutputSdk(L *lua.LState, val lua.LValue) lua.Writer {
