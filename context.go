@@ -111,7 +111,7 @@ func fsSay(co *lua.LState) int {
 	var buf bytes.Buffer
 
 	for i := 1; i <= n; i++ {
-		buf.WriteString(co.CheckString(i))
+		buf.WriteString(co.Get(i).String())
 	}
 	ctx.Response.SetBodyRaw(buf.Bytes())
 	return 0
